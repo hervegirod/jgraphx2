@@ -67,6 +67,9 @@
             <include name="README.md"/>
             <include name="license.txt"/>
          </fileset>
+         <fileset description="distrib" dir="${dist.dir}">
+            <include name="*.jar"/>
+         </fileset>         
       </zip>
    </target>
    <target depends="version, -post-init, -zipsources, -zipbinaries" description="create zip files" name="zip">
