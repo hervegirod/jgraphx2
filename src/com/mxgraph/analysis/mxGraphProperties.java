@@ -81,7 +81,7 @@ public class mxGraphProperties {
 
    /**
     *
-    * @param properties
+    * @param properties the properties
     * @param isTraverseVisible
     */
    public static void setTraverseVisible(Map<String, Object> properties,
@@ -93,8 +93,8 @@ public class mxGraphProperties {
 
    /**
     *
-    * @param properties
-    * @return
+    * @param properties the properties
+    * @return true if the graph is directed
     */
    public static boolean isDirected(Map<String, Object> properties, boolean defaultValue) {
       if (properties != null) {
