@@ -16,6 +16,7 @@
    <target name="-post-init" depends="-init-project" >
       <!-- general properties definition -->
       <property name="archiveName" value="jgraphx2"/>
+      <property name="javadocEXE" value="${jdk.home}/bin/javadoc.exe"/>      
    </target>
    <!-- =================================================================== -->
    <!-- Non NB targets -->
@@ -54,6 +55,7 @@
             <include name="src/**/*.java"/>
             <include name="src/**/*.html"/>
             <include name="src/**/*.properties"/>
+            <include name="src/**/*.gif"/>
             <include name="src/**/*.mf"/>
          </fileset>
          <fileset description="samples" dir=".">
@@ -63,12 +65,36 @@
             <include name="nbproject/**/*.*"/>
             <include name="build.xml"/>
             <include name="README.md"/>
-            <include name="LICENSE"/>
+            <include name="license.txt"/>
          </fileset>
       </zip>
    </target>
    <target depends="version, -post-init, -zipsources, -zipbinaries" description="create zip files" name="zip">
    </target>
+   
+   <!-- =================================================================== -->
+   <!-- NB overwrite targets : javadocs                                     -->
+   <!-- =================================================================== -->
+
+   <target depends="-javadoc-core" name="-javadoc-build" />
+
+   <target depends="init, -init-project, -post-init" name="-javadoc-core">
+      <!-- Javadoc -->
+      <javadoc author="${javadoc.author}" charset="UTF-8" destdir="${dist.javadoc.dir}"
+               docencoding="UTF-8" encoding="${javadoc.encoding.used}" failonerror="true"
+               noindex="${javadoc.noindex}" nonavbar="${javadoc.nonavbar}"
+               notree="${javadoc.notree}" private="${javadoc.private}"
+               source="${javac.source}" splitindex="${javadoc.splitindex}"
+               use="${javadoc.use}" useexternalfile="true" version="${javadoc.version}"
+               windowtitle="${javadoc.windowtitle}" executable="${javadocEXE}" >         
+         <!-- the Xdoclint argument avoid to get javadoc errors when the documentation format is not compliant for HTML 4, which was the case before
+         Java 8. It would also not be a good idea, because empty tags like br are very useful -->
+         <arg line="-Xdoclint:none"/>
+         <fileset dir="${src.dir}" excludes="${excludes}" includes="${includes}">
+            <filename name="**/*.java"/>
+         </fileset>
+      </javadoc>
+   </target>        
 
    <!-- =================================================================== -->
    <!-- NB overwrite targets : jar -->
